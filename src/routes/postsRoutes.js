@@ -1,29 +1,46 @@
-import express from "express"; // Importa o framework Express para criar a aplicação.
-import multer from "multer"; // Importa o módulo Multer para lidar com uploads de arquivos.
-import { listarPosts, postarNovoPost, uploadImagem, atualizarNovoPost } from "../controllers/postsController.js"; // Importa funções para controlar as ações dos posts.
-import cors from "cors"
+import express from 'express';
+import multer from 'multer';
+import cors from 'cors';
+
 
 const corsOptions = {
-  origin: "http://localhost:8000",
+  origin: 'http://localhost:8000',
   optionsSuccessStatus: 200
-}
 
-const storage = multer.diskStorage({ // Configura como os arquivos serão armazenados.
-  destination: (req, file, cb) => cb(null, 'uploads/'), // Define a pasta de destino para os uploads.
-  filename: (req, file, cb) => cb(null, file.originalname) // Define o nome do arquivo.
+}
+import { listarPosts, postarNovoPost, uploadImagem, atualizarNovoPost } from '../controllers/postsController.js';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Especifica o diretório para armazenar as imagens enviadas
+    cb(null, 'uploads/'); // Substitua por seu caminho de upload desejado
+  },
+  filename: function (req, file, cb) {
+    // Mantém o nome original do arquivo por simplicidade
+    cb(null, file.originalname); // Considere usar uma estratégia de geração de nomes únicos para produção
+  }
 });
 
-const upload = multer({ storage }); // Cria uma instância do Multer com as configurações de armazenamento.
-//Linux ou no mac
-//const upload = multer({ dest: './uploads'});
+
+const upload = multer({ dest: './uploads', storage });
+
+
+//const upload =multer({dest:'./uploads'})
+
+
 
 const routes = (app) => {
-  app.use(express.json()); // Permite lidar com dados JSON nas requisições.
+  // Habilita o parser JSON para lidar com requisições com corpo em formato JSON
+  app.use(express.json());
   app.use(cors(corsOptions))
-  app.get("/posts", listarPosts); // Rota para listar todos os posts.
-  app.post("/posts", postarNovoPost); // Rota para criar um novo post.
-  app.post("/upload", upload.single("imagem"), uploadImagem); // Rota para fazer upload de uma imagem.
-  app.put("/upload:id", atualizarNovoPost)
-};
+  // Rota GET para a URL '/posts' buscar todos os posts
+  app.get('/posts', listarPosts);
+  // Rota GET para a URL '/posts' criar um post
+  app.post('/posts', postarNovoPost)   // chama a função controladora para criação de posts
+  //Rota upload de imagens (assumindo uma única imagem chamada "imagem")
+  app.post('/upload', upload.single('imagem'), uploadImagem) // chama a função controladora para processamento da imagem
+  app.put('/upload/:id', atualizarNovoPost)
+}
 
-export default routes; // Exporta a função das rotas para ser usada em outro arquivo.
+
+export default routes;
