@@ -34,7 +34,7 @@ Configure o ambiente no arquivo .env (caso aplicável). Certifique-se de adicion
 3. Utilize um cliente como Postman ou Insomnia para testar as rotas disponíveis.
 
 ## Front-End do Projeto
-O link para o repositório do back-end pode ser encontrado  <a href="https://github.com/DeyvissonRobert/Instabytes-Front/" > aqui </a>.
+O link para o repositório do front-end pode ser encontrado  <a href="https://github.com/DeyvissonRobert/Instabytes-Front/" > aqui </a>.
 
 ## Estrutura do Projeto
   ```sh
