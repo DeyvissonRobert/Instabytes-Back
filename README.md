@@ -45,5 +45,3 @@ O link para o repositório do front-end pode ser encontrado <a href="https://git
     ├── package.json     # Dependências e scripts do projeto
     ├── server.js        # Inicialização do servidor
     ├── services.sh      # Scripts adicionais
-
-
